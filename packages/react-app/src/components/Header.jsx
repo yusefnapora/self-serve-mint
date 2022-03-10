@@ -5,10 +5,10 @@ import React from "react";
 
 export default function Header() {
   return (
-    <a href="https://github.com/austintgriffith/scaffold-eth" target="_blank" rel="noopener noreferrer">
+    <a href="https://github.com/yusefnapora/self-serve-mint" target="_blank" rel="noopener noreferrer">
       <PageHeader
-        title="🏗 scaffold-eth"
-        subTitle="forkable Ethereum dev stack focused on fast product iteration"
+        title="🌿 Self Serve Mint 🌿"
+        subTitle="An ERC-721 NFT contract that anyone can use to mint NFTs."
         style={{ cursor: "pointer" }}
       />
     </a>
