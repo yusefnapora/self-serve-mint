@@ -14,11 +14,7 @@ function Home({ yourLocalBalance, readContracts }) {
   // in this case, let's keep track of 'purpose' variable from our contract
   const purpose = useContractReader(readContracts, "YourContract", "purpose");
 
-  return (
-    <div>
-
-    </div>
-  );
+  return <div></div>;
 }
 
 export default Home;

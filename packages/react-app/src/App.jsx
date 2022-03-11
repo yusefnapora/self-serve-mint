@@ -1,11 +1,6 @@
 import { Button, Col, Typography, Row, PageHeader } from "antd";
 import "antd/dist/antd.css";
-import {
-  useBalance,
-  useContractLoader,
-  useGasPrice,
-  useUserProviderAndSigner,
-} from "eth-hooks";
+import { useBalance, useContractLoader, useGasPrice, useUserProviderAndSigner } from "eth-hooks";
 import { useExchangeEthPrice } from "eth-hooks/dapps/dex";
 import React, { useCallback, useEffect, useState } from "react";
 import { Link, Route, Switch, useLocation } from "react-router-dom";
@@ -217,36 +212,35 @@ function App(props) {
   return (
     <div className="App">
       <PageHeader
-        title="🌿 Self Serve Mint" 
-        subTitle="An ERC-721 NFT contract that's open to everyone" 
+        title="🌿 Self Serve Mint"
+        subTitle="An ERC-721 NFT contract that's open to everyone"
         extra={[
-            <Account
-              key="account"
-              useBurner={USE_BURNER_WALLET}
-              address={address}
-              localProvider={localProvider}
-              userSigner={userSigner}
-              mainnetProvider={mainnetProvider}
-              price={price}
-              web3Modal={web3Modal}
-              loadWeb3Modal={loadWeb3Modal}
-              logoutOfWeb3Modal={logoutOfWeb3Modal}
-              blockExplorer={blockExplorer}
+          <Account
+            key="account"
+            useBurner={USE_BURNER_WALLET}
+            address={address}
+            localProvider={localProvider}
+            userSigner={userSigner}
+            mainnetProvider={mainnetProvider}
+            price={price}
+            web3Modal={web3Modal}
+            loadWeb3Modal={loadWeb3Modal}
+            logoutOfWeb3Modal={logoutOfWeb3Modal}
+            blockExplorer={blockExplorer}
+          />,
+        ]}
+      >
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <div>
+            <NetworkSwitch
+              key="network-switch"
+              networkOptions={networkOptions}
+              selectedNetwork={selectedNetwork}
+              setSelectedNetwork={setSelectedNetwork}
             />
-        ]}>
-          <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-            <div>
-              <NetworkSwitch
-                key="network-switch"
-                networkOptions={networkOptions}
-                selectedNetwork={selectedNetwork}
-                setSelectedNetwork={setSelectedNetwork}
-              />
-              </div>
           </div>
-       </PageHeader>
-
-
+        </div>
+      </PageHeader>
 
       <Switch>
         <Route exact path="/">
