@@ -3,6 +3,7 @@ import { ethers } from "ethers";
 import React from "react";
 import { Link } from "react-router-dom";
 
+
 /**
  * web3 props can be passed from '../App.jsx' into your local view component for use
  * @param {*} yourLocalBalance balance on current network

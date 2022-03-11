@@ -1,3 +1,7 @@
+
+// API token for nft.storage. Please sign up and replace this with your own key from https://nft.storage/manage/
+export const NFT_STORAGE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDQxMjY5RGIwQjdjNzA3Y0I0MjZCMjg2MUI1NTY2ZEEwZTZjQzVmOTAiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY0NzAxNjcxNzY1OCwibmFtZSI6InN4c3ctc2VsZi1zZXJ2ZS1taW50In0.RwRvV01aWeOyctN3J9SnhyhHuLHyxSL3i7p-SAN9mW0";
+
 // MY INFURA_ID, SWAP IN YOURS FROM https://infura.io/dashboard/ethereum
 export const INFURA_ID = "d53122f8d11f40afaa9fa82b1697dce2";
 
@@ -8,6 +12,8 @@ export const ETHERSCAN_KEY = "6BB3BE5KMFHZE1TI4UPSHK5UPHHYKCH7F3";
 export const BLOCKNATIVE_DAPPID = "704c5bfc-572f-4ac8-9834-9e191c99d6a1";
 
 export const ALCHEMY_KEY = "GjAfIETkB3CS8gxugkCFRvZH7B4bz5j-";
+
+export const DEFAULT_CONTRACT_NAME = "SelfServeMint";
 
 export const NETWORKS = {
   localhost: {

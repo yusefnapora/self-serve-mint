@@ -24,6 +24,7 @@ import deployedContracts from "./contracts/hardhat_contracts.json";
 import { Transactor, Web3ModalSetup } from "./helpers";
 import { Home } from "./views";
 import { useStaticJsonRPC } from "./hooks";
+import Minter from "./views/Minter";
 
 const { ethers } = require("ethers");
 /*
@@ -245,7 +246,11 @@ function App(props) {
       <Switch>
         <Route exact path="/">
           {/* pass in any web3 props to this Home component. For example, yourLocalBalance */}
-          <Home yourLocalBalance={yourLocalBalance} readContracts={readContracts} />
+          <Minter
+            contract={writeContracts.SelfServeMint}
+            signer={userProviderAndSigner.signer}
+            provider={userProviderAndSigner.provider}
+            address={address} />
         </Route>
         <Route exact path="/debug">
           {/*
