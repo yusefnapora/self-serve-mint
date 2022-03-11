@@ -5,12 +5,9 @@ import React from "react";
 
 export default function Header() {
   return (
-    <a href="https://github.com/yusefnapora/self-serve-mint" target="_blank" rel="noopener noreferrer">
-      <PageHeader
-        title="🌿 Self Serve Mint 🌿"
-        subTitle="An ERC-721 NFT contract that anyone can use to mint NFTs."
-        style={{ cursor: "pointer" }}
-      />
-    </a>
+    <PageHeader
+      title="🌿 Self Serve Mint"
+      subTitle="A simple NFT minting contract that's open to all."
+    />
   );
 }
