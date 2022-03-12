@@ -230,14 +230,14 @@ function App(props) {
       >
         <div style={{ display: "flex", justifyContent: "flex-end" }}>
           <div>
-          <NetworkDisplay
-            NETWORKCHECK={NETWORKCHECK}
-            localChainId={localChainId}
-            selectedChainId={selectedChainId}
-            targetNetwork={targetNetwork}
-            logoutOfWeb3Modal={logoutOfWeb3Modal}
-            USE_NETWORK_SELECTOR={USE_NETWORK_SELECTOR}
-          />
+            <NetworkDisplay
+              NETWORKCHECK={NETWORKCHECK}
+              localChainId={localChainId}
+              selectedChainId={selectedChainId}
+              targetNetwork={targetNetwork}
+              logoutOfWeb3Modal={logoutOfWeb3Modal}
+              USE_NETWORK_SELECTOR={USE_NETWORK_SELECTOR}
+            />
           </div>
           <div>
             <NetworkSwitch

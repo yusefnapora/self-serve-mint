@@ -5,10 +5,11 @@ import { NFTStorage } from "nft.storage/dist/bundle.esm.min.js";
 import { Transactor } from "../helpers";
 import { NFT_STORAGE_KEY } from "../constants";
 
-const STEP_ENTER_INFO = 0;
-const STEP_UPLOAD = 1;
-const STEP_MINT = 2;
-const STEP_FINISHED = 3;
+const STEP_CONNECT_WALLET = 0;
+const STEP_ENTER_INFO = 1;
+const STEP_UPLOAD = 2;
+const STEP_MINT = 3;
+const STEP_FINISHED = 4;
 
 async function mintNFT({
   contract,
@@ -61,6 +62,8 @@ async function mintNFT({
 }
 
 export default function Minter({ contract, signer, provider, gasPrice }) {
+  const initialStep = signer == null ? STEP_CONNECT_WALLET : STEP_ENTER_INFO;
+
   const [file, setFile] = useState(null);
   const [previewURL, setPreviewURL] = useState(null);
   const [nftName, setName] = useState("");
@@ -68,9 +71,15 @@ export default function Minter({ contract, signer, provider, gasPrice }) {
   const [minting, setMinting] = useState(false);
   const [status, setStatus] = useState("");
   const [tokenId, setTokenId] = useState(null);
-  const [currentStep, setCurrentStep] = useState(STEP_ENTER_INFO);
+  const [currentStep, setCurrentStep] = useState(initialStep);
+
+  if (currentStep === STEP_CONNECT_WALLET && signer != null) {
+    setCurrentStep(STEP_ENTER_INFO);
+  }
 
   console.log("signer", signer);
+  console.log("initial step", initialStep);
+  console.log("current step", currentStep);
 
   const beforeUpload = (file, fileList) => {
     console.log(file, fileList);
@@ -161,6 +170,7 @@ export default function Minter({ contract, signer, provider, gasPrice }) {
 
   const mintingSteps = (
     <Steps current={currentStep}>
+      <Steps.Step title="Connect your wallet"/>
       <Steps.Step title="Enter NFT info" />
       <Steps.Step title="Upload to nft.storage" />
       <Steps.Step title="Mint" />
@@ -205,6 +215,21 @@ export default function Minter({ contract, signer, provider, gasPrice }) {
       </Card>
     </div>
   );
+
+  const notConnectedView = (
+    <div style={{ margin: "auto", width: "70vw" }}>
+      {mintingSteps}
+      <Card title="Connect your wallet" size="large" style={{ marginTop: 25, width: "100%" }} loading={false}>
+        <Typography.Text>
+          You'll need to connect your Ethereum wallet to get started. Look for a "Connect" button at the top of the page!
+        </Typography.Text>
+      </Card>
+    </div>
+  );
+
+  if (currentStep === STEP_CONNECT_WALLET) {
+    return notConnectedView;
+  }
 
   if (currentStep === STEP_FINISHED) {
     return finishedView;
