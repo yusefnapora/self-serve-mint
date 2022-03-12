@@ -1,20 +1,18 @@
-import { Button, Col, Typography, Row, PageHeader } from "antd";
+import { Col, Row, PageHeader } from "antd";
 import "antd/dist/antd.css";
 import { useBalance, useContractLoader, useGasPrice, useUserProviderAndSigner } from "eth-hooks";
 import { useExchangeEthPrice } from "eth-hooks/dapps/dex";
 import React, { useCallback, useEffect, useState } from "react";
-import { Link, Route, Switch, useLocation } from "react-router-dom";
+import { Route, Switch, useLocation } from "react-router-dom";
 import "./App.css";
 import {
   Account,
   Contract,
   Faucet,
   GasGauge,
-  Header,
   Ramp,
   ThemeSwitch,
   NetworkDisplay,
-  FaucetHint,
   NetworkSwitch,
 } from "./components";
 import { NETWORKS, ALCHEMY_KEY } from "./constants";
@@ -22,7 +20,6 @@ import externalContracts from "./contracts/external_contracts";
 // contracts
 import deployedContracts from "./contracts/hardhat_contracts.json";
 import { Transactor, Web3ModalSetup } from "./helpers";
-import { Home } from "./views";
 import { useStaticJsonRPC } from "./hooks";
 import Minter from "./views/Minter";
 
