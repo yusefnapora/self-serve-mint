@@ -1,22 +1,37 @@
-import { Card, Upload, Input, Button, Form, Col } from "antd";
+import { Card, Upload, Input, Button, Form, Steps, Typography, Row, Col } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 import React, { useState } from "react";
 import { NFTStorage } from "nft.storage/dist/bundle.esm.min.js";
-import { useContractLoader } from "eth-hooks";
-import Account from "../components/Account";
 import { Transactor } from "../helpers";
-import { NFT_STORAGE_KEY, DEFAULT_CONTRACT_NAME } from "../constants";
+import { NFT_STORAGE_KEY } from "../constants";
 
-async function mintNFT({ contract, ownerAddress, provider, gasPrice, setStatus, image, name, description }) {
+const STEP_ENTER_INFO = 0;
+const STEP_UPLOAD = 1;
+const STEP_MINT = 2;
+const STEP_FINISHED = 3;
+
+async function mintNFT({
+  contract,
+  ownerAddress,
+  provider,
+  gasPrice,
+  image,
+  name,
+  description,
+  setStatus,
+  setCurrentStep,
+}) {
   // First we use the nft.storage client library to add the image and metadata to IPFS / Filecoin
   const client = new NFTStorage({ token: NFT_STORAGE_KEY });
   setStatus("Uploading to nft.storage...");
+  setCurrentStep(STEP_UPLOAD);
   const metadata = await client.store({
     name,
     description,
     image,
   });
   setStatus(`Upload complete! Minting token with metadata URI: ${metadata.url}`);
+  setCurrentStep(STEP_MINT);
 
   // scaffold-eth's Transactor helper gives us a nice UI popup when a transaction is sent
   const transactor = Transactor(provider, gasPrice);
@@ -41,12 +56,11 @@ async function mintNFT({ contract, ownerAddress, provider, gasPrice, setStatus, 
     break;
   }
   setStatus(`Minted token #${tokenId}`);
+  setCurrentStep(STEP_FINISHED);
   return tokenId;
 }
 
 export default function Minter({ contract, signer, provider, gasPrice }) {
-  const address = contract ? contract.address : "";
-
   const [file, setFile] = useState(null);
   const [previewURL, setPreviewURL] = useState(null);
   const [nftName, setName] = useState("");
@@ -54,6 +68,9 @@ export default function Minter({ contract, signer, provider, gasPrice }) {
   const [minting, setMinting] = useState(false);
   const [status, setStatus] = useState("");
   const [tokenId, setTokenId] = useState(null);
+  const [currentStep, setCurrentStep] = useState(STEP_ENTER_INFO);
+
+  console.log("signer", signer);
 
   const beforeUpload = (file, fileList) => {
     console.log(file, fileList);
@@ -122,6 +139,7 @@ export default function Minter({ contract, signer, provider, gasPrice }) {
         ownerAddress,
         gasPrice,
         setStatus,
+        setCurrentStep,
         name: nftName,
         image: file,
         description,
@@ -141,8 +159,18 @@ export default function Minter({ contract, signer, provider, gasPrice }) {
     </Form.Item>
   );
 
+  const mintingSteps = (
+    <Steps current={currentStep}>
+      <Steps.Step title="Enter NFT info" />
+      <Steps.Step title="Upload to nft.storage" />
+      <Steps.Step title="Mint" />
+      <Steps.Step title="Finished!" />
+    </Steps>
+  );
+
   const minterForm = (
     <div style={{ margin: "auto", width: "70vw" }}>
+      {mintingSteps}
       <Card title={<div>Mint an NFT!</div>} size="large" style={{ marginTop: 25, width: "100%" }} loading={false}>
         <Form labelCol={{ span: 2 }}>
           {file == null && uploadView}
@@ -155,6 +183,32 @@ export default function Minter({ contract, signer, provider, gasPrice }) {
       </Card>
     </div>
   );
+
+  const finishedView = (
+    <div style={{ margin: "auto", width: "70vw" }}>
+      {mintingSteps}
+      <Card title={<div>Token #{tokenId}</div>} size="large" style={{ marginTop: 25, width: "100%" }} loading={false}>
+        {preview}
+        <Row justify="start" gutter={2}>
+          <Col span={2} offset={5}>
+            <Typography.Text strong>Name:</Typography.Text>
+          </Col>
+          <Col span={4}>{nftName}</Col>
+        </Row>
+        <Row justify="start" gutter={2}>
+          <Col span={2} offset={5}>
+            <Typography.Text strong>Description:</Typography.Text>
+          </Col>
+          <Col span={8}>{description}</Col>
+        </Row>
+        {status}
+      </Card>
+    </div>
+  );
+
+  if (currentStep === STEP_FINISHED) {
+    return finishedView;
+  }
 
   return minterForm;
 }
