@@ -61,7 +61,22 @@ async function mintNFT({
   return tokenId;
 }
 
-export default function Minter({ contract, signer, provider, gasPrice }) {
+function openSeaURL(tokenId, selectedNetwork, contractAddress) {
+  if (!tokenId || !contractAddress) {
+    return null;
+  }
+  const address = contractAddress.toLowerCase();
+  switch (selectedNetwork) {
+    case "rinkeby":
+      return `https://testnets.opensea.io/assets/${address}/${tokenId}`;
+    case "mainnnet":
+      return `https://opensea.io/assets/${address}/${tokenId}`;
+    default:
+      return null;
+  }
+}
+
+export default function Minter({ contract, signer, provider, gasPrice, selectedNetwork }) {
   const initialStep = signer == null ? STEP_CONNECT_WALLET : STEP_ENTER_INFO;
 
   const [file, setFile] = useState(null);
@@ -73,13 +88,12 @@ export default function Minter({ contract, signer, provider, gasPrice }) {
   const [tokenId, setTokenId] = useState(null);
   const [currentStep, setCurrentStep] = useState(initialStep);
 
+  const contractAddress = contract ? contract.address : undefined;
+  console.log(`selected network: ${selectedNetwork}, address: ${contractAddress}`);
+
   if (currentStep === STEP_CONNECT_WALLET && signer != null) {
     setCurrentStep(STEP_ENTER_INFO);
   }
-
-  console.log("signer", signer);
-  console.log("initial step", initialStep);
-  console.log("current step", currentStep);
 
   const beforeUpload = (file, fileList) => {
     console.log(file, fileList);
@@ -170,7 +184,7 @@ export default function Minter({ contract, signer, provider, gasPrice }) {
 
   const mintingSteps = (
     <Steps current={currentStep}>
-      <Steps.Step title="Connect your wallet"/>
+      <Steps.Step title="Connect your wallet" />
       <Steps.Step title="Enter NFT info" />
       <Steps.Step title="Upload to nft.storage" />
       <Steps.Step title="Mint" />
@@ -194,6 +208,9 @@ export default function Minter({ contract, signer, provider, gasPrice }) {
     </div>
   );
 
+  const openSeaHref = openSeaURL(tokenId, selectedNetwork, contractAddress);
+  const openSeaLink = openSeaHref ? <a href={openSeaHref}>View on OpenSea</a> : undefined;
+
   const finishedView = (
     <div style={{ margin: "auto", width: "70vw" }}>
       {mintingSteps}
@@ -212,6 +229,7 @@ export default function Minter({ contract, signer, provider, gasPrice }) {
           <Col span={8}>{description}</Col>
         </Row>
         {status}
+        <Row justify="center">{openSeaLink}</Row>
       </Card>
     </div>
   );
@@ -221,7 +239,8 @@ export default function Minter({ contract, signer, provider, gasPrice }) {
       {mintingSteps}
       <Card title="Connect your wallet" size="large" style={{ marginTop: 25, width: "100%" }} loading={false}>
         <Typography.Text>
-          You'll need to connect your Ethereum wallet to get started. Look for a "Connect" button at the top of the page!
+          You'll need to connect your Ethereum wallet to get started. Look for a "Connect" button at the top of the
+          page!
         </Typography.Text>
       </Card>
     </div>

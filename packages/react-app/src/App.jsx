@@ -5,16 +5,7 @@ import { useExchangeEthPrice } from "eth-hooks/dapps/dex";
 import React, { useCallback, useEffect, useState } from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
 import "./App.css";
-import {
-  Account,
-  Contract,
-  Faucet,
-  GasGauge,
-  Ramp,
-  ThemeSwitch,
-  NetworkDisplay,
-  NetworkSwitch,
-} from "./components";
+import { Account, Contract, Faucet, GasGauge, Ramp, ThemeSwitch, NetworkDisplay, NetworkSwitch } from "./components";
 import { NETWORKS, ALCHEMY_KEY } from "./constants";
 import externalContracts from "./contracts/external_contracts";
 // contracts
@@ -258,6 +249,7 @@ function App(props) {
             signer={userProviderAndSigner.signer}
             provider={userProviderAndSigner.provider}
             address={address}
+            selectedNetwork={selectedNetwork}
           />
         </Route>
         <Route exact path="/debug">
