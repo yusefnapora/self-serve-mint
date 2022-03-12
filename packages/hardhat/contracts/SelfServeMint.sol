@@ -36,7 +36,9 @@ contract SelfServeMint is ERC721URIStorage {
   }
 
     /**
-     * Override isApprovedForAll to whitelist user's OpenSea proxy accounts to enable gas-less listings.
+     * Override isApprovedForAll to whitelist user's OpenSea proxy accounts to enable listing on OpenSea without
+     * paying gas for an additional approval. 
+     * See https://docs.opensea.io/docs/1-structuring-your-smart-contract#opensea-whitelisting-optional
      */
     function isApprovedForAll(address owner, address operator)
         override
