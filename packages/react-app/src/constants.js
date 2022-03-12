@@ -1,6 +1,6 @@
-
 // API token for nft.storage. Please sign up and replace this with your own key from https://nft.storage/manage/
-export const NFT_STORAGE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDQxMjY5RGIwQjdjNzA3Y0I0MjZCMjg2MUI1NTY2ZEEwZTZjQzVmOTAiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY0NzAxNjcxNzY1OCwibmFtZSI6InN4c3ctc2VsZi1zZXJ2ZS1taW50In0.RwRvV01aWeOyctN3J9SnhyhHuLHyxSL3i7p-SAN9mW0";
+export const NFT_STORAGE_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDQxMjY5RGIwQjdjNzA3Y0I0MjZCMjg2MUI1NTY2ZEEwZTZjQzVmOTAiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY0NzAxNjcxNzY1OCwibmFtZSI6InN4c3ctc2VsZi1zZXJ2ZS1taW50In0.RwRvV01aWeOyctN3J9SnhyhHuLHyxSL3i7p-SAN9mW0";
 
 // MY INFURA_ID, SWAP IN YOURS FROM https://infura.io/dashboard/ethereum
 export const INFURA_ID = "d53122f8d11f40afaa9fa82b1697dce2";
